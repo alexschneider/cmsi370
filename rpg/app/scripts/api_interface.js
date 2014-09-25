@@ -1,6 +1,7 @@
+/* exported db */
 // Diabolical interface class
 // All methods are async and require two parameter callbacks (err, res)
-var db = (function() {
+var db = (function() { // JD: Suggestion: separate function keyword from arguments.
     'use strict';
     var diabolical = {};
     var baseURL = 'http://lmu-diabolical.appspot.com';
@@ -13,14 +14,15 @@ var db = (function() {
             dataType: 'json',
             accept: 'application/json'
         };
+
         if (data !== null) {
             ajaxSettings.data = JSON.stringify(data);
         }
         $.ajax(ajaxSettings).done(function(res) {
-                return callback(null, res);
-            }).fail(function(err) {
-                return callback(err);
-            });
+            return callback(null, res);
+        }).fail(function(err) {
+            return callback(err);
+        });
     };
 
     diabolical.getCharacter = function(charID, callback) {
@@ -67,7 +69,7 @@ var db = (function() {
         var deleteCharEndPoint = '/characters/' + charID;
         var requestURI = baseURL + deleteCharEndPoint;
         return ajax('DELETE', requestURI, null, callback);
-    }
+    };
 
     diabolical.createRandomChar = function(callback) {
         var randomCharEndPoint = '/characters/spawn';
@@ -80,4 +82,6 @@ var db = (function() {
         var requestURI = baseURL + randomItemEndPoint;
         return ajax('GET', requestURI, null, callback);
     };
+
+    return diabolical;
 })();
