@@ -1,0 +1,58 @@
+<template class="list-character-row">
+  <tr>
+    <td class="list-character-name"></td>
+    <td class="list-character-gender">
+      <i class="gender-symbol-male gender-symbol hide fi-male-symbol"></i>
+      <i class="gender-symbol-female gender-symbol hide fi-female-symbol"></i>
+    </td>
+    <td class="list-character-classtype"></td>
+    <td class="list-character-level"></td>
+    <td class="list-character-money"></td>
+    <td class="list-character-use">
+      <button class="button tiny round use">
+        Use
+      </button>
+    </td>
+    <td class="list-character-modify">
+      <button class="button tiny round modify"
+              data-reveal-id="create-modify-character">
+        Modify
+      </button>
+    </td>
+    <td class="list-character-delete">
+      <button class="button tiny round alert delete">
+        Delete
+      </button>
+    </td>
+  </tr>
+</template>
+
+<template id="character-table">
+  <div class="row">
+      <div class="small-12 columns">
+        <table>
+          <thead>
+            <tr>
+              <th id="name-heading"><a class="sort name">Name</a></th>
+              <th id="gender-heading"><a class="sort gender">Gender</a></th>
+              <th id="class-heading"><a class="sort classType">Class type</a></th>
+              <th id="level-heading"><a class="sort level">Level</a></th>
+              <th id="money-heading"><a class="sort money">Money</a></th>
+              <th id="use-heading">Use</th>
+              <th id="modify-heading">Modify</th>
+              <th id="delete-heading">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Content from template#character-row will be in here -->
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <span class="close-reveal-modal fi-x-circle"></span>
+  <script type="text/javascript">
+    // Hack to ensure that foundation bindings properly
+    // occur when dynamic content is added.
+    $(document).foundation();
+  </script>
+</template>

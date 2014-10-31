@@ -1,0 +1,12 @@
+name: rpg
+version: 0.0.1
+description:
+    Frontend for http://lmu-diabolical.appspot.com/
+    Written in Dart. 
+author: Alex Schneider <aschne19@lion.lmu.edu>
+homepage: https://alexschneider.github.io/rpg
+dependencies:
+    browser: any
+dev_dependencies:
+    unittest: any
+

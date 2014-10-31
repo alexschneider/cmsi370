@@ -1,0 +1,100 @@
+<template id="create-edit-character">
+  <form data-abide>
+    <h2 id='create-modify-header' class="text-center">
+      <!--
+        Will contain the title of this div
+      -->
+    </h2>
+    <div class="row">
+      <div class="small-12 small-centered columns">
+        <div class="row">
+          <div class="small-3 small-offset-1 columns">
+            <label for="character-name" class="right inline">
+              Character Name
+            </label>
+          </div>
+          <div class="small-6 columns end">
+            <input type="alpha_numeric" id="character-name"
+                   placeholder="Enter character name" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-3 small-offset-1 columns">
+            <label for="character-gender-male" class="right">
+              Character Gender
+            </label>
+          </div>
+          <div class="small-6 columns end">
+            <input type="radio" name="character-gender" value="Male"
+                   id="character-gender-male" required>
+            <label for="character-gender-male">Male</label>
+            <input type="radio" name="character-gender" value="Female"
+                   id="character-gender-female" required>
+            <label for="character-gender-female">Female</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-3 small-offset-1 columns">
+            <label for="character-class" class="right inline">
+              Character Class
+            </label>
+          </div>
+          <div class="small-6 columns end">
+            <input type="alpha_numeric" id="character-class"
+                   placeholder="Enter character class" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-3 small-offset-1 columns">
+            <label for="character-level" class="right inline">
+              Character Level
+            </label>
+          </div>
+          <div class="small-6 columns end">
+            <input type="number" id="character-level"
+                   placeholder="Enter character level" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-3 small-offset-1 columns">
+            <label for="character-money" class="right inline">
+              Character Money
+            </label>
+          </div>
+          <div class="small-6 columns end">
+            <div class="row collapse">
+              <div class="small-1 columns">
+                <span class="prefix"><i class="fi-dollar"></i></span>
+              </div>
+              <div class="small-11 columns">
+                <input type="number" id="character-money"
+                       placeholder="Enter character money" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-offset-2 small-4 columns">
+            <button id="random-character"
+                    class="button small expand round">
+              Generate Random
+            </button>
+          </div>
+          <div class="small-4 columns left">
+            <button id="create-modify-button" class="button small expand round">
+              <!--
+                Will contain either Create or Modify
+              -->
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <a class="close-reveal-modal fi-x-circle"></a>
+  <script type="text/javascript">
+    // Hack to ensure that foundation bindings properly
+    // occur when dynamic content is added.
+    $(document).foundation();
+  </script>
+</template>
