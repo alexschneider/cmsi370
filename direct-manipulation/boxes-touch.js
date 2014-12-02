@@ -6,7 +6,11 @@ var BoxesTouch = {
         // Set up any pre-existing box elements for touch behavior.
         jQueryElements
             .addClass("drawing-area")
-            
+
+            .on('touchstart', BoxesTouch.createBox)
+            .on('touchmove', BoxesTouch.resizeBox)
+            .on('touchend', BoxesTouch.endCreateBox)
+
             // Event handler setup must be low-level because jQuery
             // doesn't relay touch-specific event properties.
             .each(function (index, element) {
@@ -18,6 +22,7 @@ var BoxesTouch = {
                 element.addEventListener("touchstart", BoxesTouch.startMove, false);
                 element.addEventListener("touchend", BoxesTouch.unhighlight, false);
             });
+
     },
 
     /**
@@ -32,6 +37,23 @@ var BoxesTouch = {
                     left: touch.pageX - touch.target.deltaX,
                     top: touch.pageY - touch.target.deltaY
                 });
+
+                var target      = $(touch.target),
+                    position    = target.position(),
+                    posTop      = position.top,
+                    posLeft     = position.left,
+                    posBottom   = posTop + target.height(),
+                    posRight    = posLeft + target.width(),
+                    parent      = target.parent();
+
+                if (posLeft < 0 
+                 || posTop < 0
+                 || posRight > parent.width()
+                 || posBottom > parent.height()) {
+                    target.addClass("box-delete");
+                } else {
+                    target.removeClass("box-delete");
+                }
             }
         });
         
@@ -48,6 +70,9 @@ var BoxesTouch = {
                 // Change state to "not-moving-anything" by clearing out
                 // touch.target.movingBox.
                 touch.target.movingBox = null;
+                if ($(touch.target).hasClass('box-delete')) {
+                    $(touch.target).remove();
+                }
             }
         });
     },
@@ -81,6 +106,50 @@ var BoxesTouch = {
         // Eat up the event so that the drawing area does not
         // deal with it.
         event.stopPropagation();
-    }
+    },
 
+    createBox: function (event) {
+        $.each(event.originalEvent.changedTouches, function (index, touch) {
+            var newBox = $('<div></div>');
+            newBox
+                .addClass('box')
+                .css('left', touch.pageX)
+                .css('top', touch.pageY);
+            newBox.appendTo(touch.target);
+            touch.target.start = {element: newBox, x: touch.pageX, y: touch.pageY};
+        });
+    },
+
+    resizeBox: function(event) {
+        $.each(event.originalEvent.changedTouches, function (index, touch) {
+            if (touch.target.start) {
+                var xPos = touch.pageX - touch.target.start.x,
+                    yPos = touch.pageY - touch.target.start.y;
+                if (xPos > 0) {
+                    touch.target.start.element.css('width', xPos);
+                } else {
+                    touch.target.start.element
+                        .css('left', touch.pageX)
+                        .css('width', -xPos);
+                }
+
+                if (yPos > 0) {
+                    touch.target.start.element.css('height', yPos);
+                } else {
+                    touch.target.start.element
+                        .css('top', touch.pageY)
+                        .css('height', -yPos);
+                }
+            }
+        });
+    }, 
+
+    endCreateBox: function(event) {
+        $.each(event.originalEvent.changedTouches, function (index, touch) {
+            if (touch.target.start) {
+                delete touch.target.start;
+                BoxesTouch.setDrawingArea($(touch.target));
+            }
+        });
+    }
 };
