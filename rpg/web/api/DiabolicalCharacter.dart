@@ -12,7 +12,7 @@ class DiabolicalCharacter {
   DiabolicalCharacter.empty();
 
   DiabolicalCharacter._fromMap(Map characterMap)
-    : _id         = characterMap['id'],
+    : _id         = characterMap['id'], // JD: 6 ...either they line up or they are a consistent distance from the identifier.
       classType  = characterMap['classType'],
       _gender     = characterMap['gender'],
       _level      = characterMap['level'],
