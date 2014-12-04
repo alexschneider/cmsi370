@@ -6,21 +6,21 @@ var BoxesTouch = {
         // Set up any pre-existing box elements for touch behavior.
         jQueryElements
             .addClass("drawing-area")
-
+            .off()
             .on('touchstart', BoxesTouch.createBox)
-            .on('touchmove', BoxesTouch.resizeBox)
-            .on('touchend', BoxesTouch.endCreateBox)
 
             // Event handler setup must be low-level because jQuery
             // doesn't relay touch-specific event properties.
             .each(function (index, element) {
-                element.addEventListener("touchmove", BoxesTouch.trackDrag, false);
-                element.addEventListener("touchend", BoxesTouch.endDrag, false);
+                //$(element).off();
+                $(element).on("touchend", BoxesTouch.endDrag);
             })
 
             .find("div.box").each(function (index, element) {
-                element.addEventListener("touchstart", BoxesTouch.startMove, false);
-                element.addEventListener("touchend", BoxesTouch.unhighlight, false);
+                $(element).off();
+                $(element).on("touchmove", BoxesTouch.trackDrag);
+                $(element).on("touchstart", BoxesTouch.startMove);
+                $(element).on("touchend", BoxesTouch.unhighlight);
             });
 
     },
@@ -29,7 +29,7 @@ var BoxesTouch = {
      * Tracks a box as it is rubberbanded or moved across the drawing area.
      */
     trackDrag: function (event) {
-        $.each(event.changedTouches, function (index, touch) {
+        $.each(event.originalEvent.changedTouches, function (index, touch) {
             // Don't bother if we aren't tracking anything.
             if (touch.target.movingBox) {
                 // Reposition the object.
@@ -65,7 +65,7 @@ var BoxesTouch = {
      * Concludes a drawing or moving sequence.
      */
     endDrag: function (event) {
-        $.each(event.changedTouches, function (index, touch) {
+        $.each(event.originalEvent.changedTouches, function (index, touch) {
             if (touch.target.movingBox) {
                 // Change state to "not-moving-anything" by clearing out
                 // touch.target.movingBox.
@@ -88,7 +88,7 @@ var BoxesTouch = {
      * Begins a box move sequence.
      */
     startMove: function (event) {
-        $.each(event.changedTouches, function (index, touch) {
+        $.each(event.originalEvent.changedTouches, function (index, touch) {
             // Highlight the element.
             $(touch.target).addClass("box-highlight");
 
@@ -116,40 +116,46 @@ var BoxesTouch = {
                 .css('left', touch.pageX)
                 .css('top', touch.pageY);
             newBox.appendTo(touch.target);
-            touch.target.start = {element: newBox, x: touch.pageX, y: touch.pageY};
+            $(touch.target).on(
+                    'touchmove', {
+                        element: newBox, 
+                        x: touch.pageX, 
+                        y: touch.pageY,
+                        touchId: touch.identifier
+                    }, BoxesTouch.resizeBox)
+                .on('touchend', BoxesTouch.endCreateBox);
         });
+        event.stopPropagation();
+        event.preventDefault();
     },
 
     resizeBox: function(event) {
         $.each(event.originalEvent.changedTouches, function (index, touch) {
-            if (touch.target.start) {
-                var xPos = touch.pageX - touch.target.start.x,
-                    yPos = touch.pageY - touch.target.start.y;
+            if (touch.identifier == event.data.touchId) {
+                var xPos = touch.pageX - event.data.x,
+                    yPos = touch.pageY - event.data.y;
                 if (xPos > 0) {
-                    touch.target.start.element.css('width', xPos);
+                    event.data.element.css('width', xPos);
                 } else {
-                    touch.target.start.element
+                    event.data.element
                         .css('left', touch.pageX)
                         .css('width', -xPos);
                 }
 
                 if (yPos > 0) {
-                    touch.target.start.element.css('height', yPos);
+                    event.data.element.css('height', yPos);
                 } else {
-                    touch.target.start.element
+                    event.data.element
                         .css('top', touch.pageY)
                         .css('height', -yPos);
                 }
             }
         });
+        event.stopPropagation();
+        event.preventDefault();
     }, 
 
     endCreateBox: function(event) {
-        $.each(event.originalEvent.changedTouches, function (index, touch) {
-            if (touch.target.start) {
-                delete touch.target.start;
-                BoxesTouch.setDrawingArea($(touch.target));
-            }
-        });
+        BoxesTouch.setDrawingArea($(event.target));
     }
 };
