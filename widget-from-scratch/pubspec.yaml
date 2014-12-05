@@ -1,0 +1,7 @@
+name: captcha
+version: 0.0.1
+description: captcha that can be added to any page.
+dependencies:
+  browser: any
+dev_dependencies:
+#  unittest: any
