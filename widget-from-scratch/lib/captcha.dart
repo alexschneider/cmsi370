@@ -89,12 +89,11 @@ class _NumberElement {
     event.preventDefault();
     event.stopPropagation();
     Element target = event.target;
-    document.body.children.add(target);
-
+    _containerElement.children.add(target);
     target.classes.add('moving');
     target.style
-      ..left = "${event.page.x - mousePointerOffset}px"
-      ..top = "${event.page.y - mousePointerOffset}px";
+      ..left = "${event.client.x - _containerElement.getBoundingClientRect().left - mousePointerOffset}px"
+      ..top = "${event.client.y - _containerElement.getBoundingClientRect().top - mousePointerOffset}px";
 
     _mouseMoveSub = target.onMouseMove.listen(_onMouseMove);
     _mouseLeaveSub = target.onMouseLeave.listen(_onMouseMove);
@@ -107,8 +106,8 @@ class _NumberElement {
     var left = target.style.left;
     var top = target.style.top;
     target.style
-      ..left = "${event.page.x - mousePointerOffset}px"
-      ..top = "${event.page.y - mousePointerOffset}px";
+      ..left = "${event.client.x - _containerElement.getBoundingClientRect().left - mousePointerOffset}px"
+      ..top = "${event.client.y - _containerElement.getBoundingClientRect().top - mousePointerOffset}px";
     var captchaRect = _captchaElement._el.getBoundingClientRect();
     var targetRect = target.getBoundingClientRect();
     if (!captchaRect.containsRectangle(targetRect)) {
