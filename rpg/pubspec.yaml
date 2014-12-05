@@ -7,6 +7,9 @@ author: Alex Schneider <aschne19@lion.lmu.edu>
 homepage: https://alexschneider.github.io/rpg
 dependencies:
     browser: any
+    captcha: any
 dev_dependencies:
     unittest: any
-
+dependency_overrides:
+    captcha:
+        path: /home/alex/git/cmsi370/widget-from-scratch/

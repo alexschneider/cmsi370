@@ -4,6 +4,7 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:js';
 import '../api/Diabolical.dart';
+import 'package:captcha/captcha.dart';
 
 part 'ButtonListeners.dart';
 part 'HtmlGeneration.dart';

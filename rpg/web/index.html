@@ -25,42 +25,22 @@
     <div class="small-6 small-offset-3 columns panel radius">
       <h4 class="text-center">Welcome</h4>
       <p>
-        Welcome to LMU's Diabolical game. If you know your character's ID,
-        please enter it in the textbox below. Otherwise, click on the 'Create
-        New Character' button.
+        Welcome to LMU's Diabolical game. Click on one of the two buttons
+        below to get started.
       </p>
     </div>
   </div>
 
   <div class="extra-top-margin-row">
     <div class="small-3 columns small-offset-3">
-      <div class="row collapse">
-        <div class="small-3 columns">
-          <button class="button prefix round">Go</button>
-        </div>
-        <div class="small-9 columns">
-          <input type="number" class="postfix-radius"
-                 placeholder="Character ID">
-        </div>
-      </div>
+      <button id='list-all-characters' class="button round tiny expand">
+        List All Characters
+      </button>
     </div>
     <div class="small-3 columns end">
       <button id="create-character" class="button round tiny expand">
         Create New Character
       </button>
-    </div>
-  </div>
-    <div class="row">
-      <div class="small-3 columns small-offset-3">
-        <button id='list-saved-characters' class="button round tiny expand disabled">
-          List Saved Characters
-        </button>
-      </div>
-      <div class="small-3 columns end">
-        <button id='list-all-characters' class="button round tiny expand">
-          List All Characters
-        </button>
-      </div>
     </div>
 
   <div id="create-modify-character" class="reveal-modal" data-reveal>

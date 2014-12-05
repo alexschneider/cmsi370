@@ -65,6 +65,7 @@ void generateCharacterModal([DiabolicalCharacter fromCharacter]) {
   var characterTemplate = characterImport.querySelector('#create-edit-character');
   DocumentFragment characterForm = document.importNode(characterTemplate.content, true);
   var headerText, buttonText, callback;
+  var verifiedHuman = false;
   if (fromCharacter == null) { // We are creating a new character
     headerText = "Create a new character";
     buttonText = "Create";
@@ -75,12 +76,19 @@ void generateCharacterModal([DiabolicalCharacter fromCharacter]) {
     callback = (Event e) => handleModify(e, fromCharacter);
   }
 
+  captcha(characterForm.querySelector('#character-captcha'),
+          () => verifiedHuman = true);
+
   characterForm
       ..querySelector('#create-modify-header').text = headerText
       ..querySelector('#create-modify-button').text = buttonText
       // Hack to make sure that the validation occurs before we check for it.
       ..querySelector('#create-modify-button').onClick.listen((e) =>
-          new Future(() => callback(e)))
+          new Future(() {
+            if (verifiedHuman) {
+              callback(e);
+            }
+          }))
       ..querySelector('form').onSubmit.listen((e) => e.preventDefault())
       ..querySelector('#random-character').onClick.listen(handleRandomCharacter);
 
