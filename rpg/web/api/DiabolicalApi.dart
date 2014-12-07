@@ -9,6 +9,7 @@ class DiabolicalApi {
   };
 
   static Future<Iterable<DiabolicalCharacter>> getAllCharacters() =>
+    // JD: 4
       HttpRequest.request('http://lmu-diabolical.appspot.com/characters',
                         method: 'GET',
                         responseType: 'json',
@@ -67,6 +68,7 @@ class DiabolicalApi {
     });
   /// Returns a future for null
   static Future deleteCharacterFromId(int id) =>
+    // JD: 4
       HttpRequest.request('http://lmu-diabolical.appspot.com/characters/$id',
                           method: 'DELETE',
                           responseType: 'json',
@@ -81,6 +83,7 @@ class DiabolicalApi {
   static Future deleteCharacter(DiabolicalCharacter c) => deleteCharacterFromId(c.id);
 
   static Future<DiabolicalItem> createRandomItem(int level, String slot) =>
+    // JD: 4
       HttpRequest.request('http://lmu-diabolical.appspot.com/items/spawn' +
                           '?level=$level&slot=$slot',
                           method: 'GET',
@@ -105,7 +108,7 @@ class DiabolicalApi {
               throw new DiabolicalApiException('Character not created', res);
             }
             return new DiabolicalCharacter._fromMap(res.response);
-  });
+  }); // JD: 4
 }
 
 class DiabolicalApiException implements Exception {

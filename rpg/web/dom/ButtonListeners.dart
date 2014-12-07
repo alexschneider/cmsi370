@@ -6,6 +6,7 @@ part of dom;
 Future<Iterable<DiabolicalCharacter>> characterListFuture;
 
 void initializeListeners() {
+  // JD: 7
   /*querySelector('#random-character').onClick.listen(handleRandomCharacter);*/
   querySelector('#list-all-characters').onClick.listen(handleListAll);
   querySelector('#create-character').onClick.listen(handleCreateCharacter);

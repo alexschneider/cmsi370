@@ -15,7 +15,7 @@ Set<int> savedCharacterIds() {
   return saved != null && saved != ''?
          saved.split(r',').map(int.parse).toSet() :
          new Set<int>();
-}
+} // JD: 8
 void toggleSavedCharacter(DiabolicalCharacter c) {
   var savedCharacters = savedCharacterIds();
   if (savedCharacters.contains(c.id)) {
