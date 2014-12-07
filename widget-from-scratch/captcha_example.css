@@ -1,0 +1,66 @@
+.captcha-box {
+  border: thin solid grey;
+  display: inline-block;
+  padding: 5px;
+  position: relative;
+}
+
+.captcha-box .number-container {
+  clear: both;
+}
+
+.captcha-box .number-slot-container {
+
+}
+
+.captcha-box .number-slot-container .number-box {
+  border : 3px dashed grey;
+  width : 36px;
+  height : 36px;
+  float : left;
+  margin : 5px;
+  text-align : center;
+  line-height : 30px;
+  user-select : none;
+}
+
+.captcha-box .number-slot-container .symbol {
+  float : left;
+  margin : 8px;
+  font-size : 200%;
+  user-select : none;
+  cursor : default;
+}
+
+.captcha-box .number-slot-container .success {
+  border-color: lime;
+}
+
+.captcha-box .number-slot-container .failure {
+  border-color: red;
+}
+
+.captcha-box .number-slot-container .number-box .number-success {
+  cursor: default;
+}
+
+.number-element {
+  border: 3px solid grey;
+  width: 30px;
+  height: 30px;
+  float: left;
+  margin: 5px;
+  text-align: center;
+  line-height: 30px;
+  user-select: none;
+  cursor: move;
+}
+
+.number-element.moving {
+  position: absolute;
+  margin: 0;
+}
+
+.number-element.in-slot {
+  margin: 0;
+}
